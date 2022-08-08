@@ -76,7 +76,7 @@ items.forEach(el =>
 );
 
 var lightbox = new SimpleLightbox('.gallery a', {
-  className: 'body'
+  className: 'body',
 });
 
 gallery.childNodes[0].addEventListener('click', () => {

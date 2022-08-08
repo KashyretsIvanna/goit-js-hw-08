@@ -1,22 +1,25 @@
-const vid = document.querySelector('iframe');
-console.log(vid);
-// el.contentWindow.location.reload(true);
+const iframe = document.querySelector('iframe');
+const player = new Vimeo.Player(iframe);
+let t = JSON.parse(localStorage.getItem('videoplayer-current-time'));
+// let _ = require('lodash');
 
-// setInterval(() => {
-//     const scale = e.offsetX / e.target.getBoundingClientRect().width;
-//     const time = parseInt(video.duration * scale);
-//     const min = parseInt(time / 60);
-//     const sec = time % 60;
-//     return min + ':' + sec;
+player.on('timeupdate', _.throttle(data => {
 
-//   console.log(vid.ariaValueNow);
-// }, 1000);
+  console.log(data);
+  localStorage.setItem('videoplayer-current-time', data.seconds);
+},3000))
 
-// setInterval(() => {
-//   console.log(vid.ariaValueMin);
-// }, 1000);
+player
+  .setCurrentTime(JSON.parse(localStorage.getItem('videoplayer-current-time')))
+  .then(function (seconds) {
+    console.log(seconds);
+  })
+  .catch(function (error) {
+    switch (error.name) {
+      case 'RangeError':
+        break;
 
-// function func(e) {
-//   console.log(e);
-// }
-
+      default:
+        break;
+    }
+  });
